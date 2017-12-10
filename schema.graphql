@@ -1,0 +1,24 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  hello: String!
+  viewer(token: String): Viewer
+}
+
+type Mutation {
+  login(input: LoginInput!): String!
+}
+
+type Viewer {
+  id: ID!
+  name: String!
+  mail: String!
+}
+
+input LoginInput {
+  mail: String!
+  password: String!
+}
