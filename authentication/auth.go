@@ -22,11 +22,11 @@ func Auth(next http.Handler) http.Handler {
 			fmt.Println(err)
 		}
 
-		// set context key
-		var (
-			contextKeyAuthtoken = contextKey("jwt")
-		)
+		// // set context key
+		// var (
+		// 	contextKeyAuthtoken = contextKey("jwt")
+		// )
 
-		next.ServeHTTP(w, r.WithContext(context.WithValue(ctx, contextKeyAuthtoken, jwt)))
+		next.ServeHTTP(w, r.WithContext(context.WithValue(ctx, "jwt", jwt)))
 	})
 }
