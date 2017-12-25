@@ -1,0 +1,17 @@
+{
+  "run": {
+    "defaultColor": "#ff0034", // Can also use string color names.
+    "commands": [
+      {
+        "name": "Run Go",
+        "color": "green",
+        "command": "go run" // This is executed in the terminal.
+      },
+      {
+        "name": "Build Go",
+        "color": "green",
+        "command": "go build"
+      }
+    ]
+  }
+}

@@ -4,7 +4,6 @@ schema {
 }
 
 type Query {
-  hello: String!
   viewer(token: String): Viewer
 }
 
