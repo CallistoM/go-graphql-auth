@@ -13,6 +13,7 @@ func (c contextKey) String() string {
 	return string(c)
 }
 
+// Auth checks if user is authenticated
 func Auth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
@@ -21,11 +22,6 @@ func Auth(next http.Handler) http.Handler {
 		if err != nil {
 			fmt.Println(err)
 		}
-
-		// // set context key
-		// var (
-		// 	contextKeyAuthtoken = contextKey("jwt")
-		// )
 
 		next.ServeHTTP(w, r.WithContext(context.WithValue(ctx, "jwt", jwt)))
 	})

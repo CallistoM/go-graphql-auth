@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"time"
 
-	user "github.com/callistom/api-project/structs"
+	user "github.com/callistom/jwt_graphql_server/structs"
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
 //PublicKey set secret public key
 var PublicKey = []byte("secret")
 
+// GenerateToken generates JWT token en returns it
 func GenerateToken(user user.User) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"exp": time.Now().Add(time.Hour * time.Duration(24)).Unix(),
@@ -24,6 +25,7 @@ func GenerateToken(user user.User) (string, error) {
 	return tokenString, nil
 }
 
+// CheckToken checks if token is valid else returns error
 func CheckToken(jwtToken string) (*jwt.Token, error) {
 	token, err := jwt.Parse(jwtToken, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
