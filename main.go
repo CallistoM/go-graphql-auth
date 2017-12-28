@@ -175,17 +175,11 @@ func (r *rResolver) Users(ctx context.Context, args *struct {
 
 	var allUsers []structs.User
 
-	t := db.Find(&allUsers)
-
-	for i, _ := range allUsers {
-		db.Model(allUsers[i])
-	}
-
-	fmt.Println("places:", t)
+	db.Find(&allUsers)
 
 	var l []*resolvers.UsersResolver
 
-	for _, user := range users {
+	for _, user := range allUsers {
 		l = append(l, &resolvers.UsersResolver{user})
 	}
 
