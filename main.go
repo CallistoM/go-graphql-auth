@@ -25,26 +25,6 @@ var db *gorm.DB
 
 var schema *graphql.Schema
 
-var users = []structs.User{
-	{
-		Name:     "Example User",
-		Mail:     "example@mail.com",
-		Password: "example",
-	},
-	{
-		Name:     "Test User",
-		Mail:     "test@mail.com",
-		Password: "test",
-	},
-}
-
-type User struct {
-	gorm.Model
-	Name     string
-	Mail     string
-	Password string
-}
-
 var err error
 
 func init() {
@@ -77,7 +57,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// defer db.Close()
+	defer db.Close()
 
 	http.Handle("/graphql", authentication.Auth(&relay.Handler{Schema: schema}))
 
@@ -88,6 +68,13 @@ func main() {
 func (r *rResolver) Login(args *struct {
 	Input *structs.LoginInput
 }) (string, error) {
+
+	var users []structs.User
+
+	db.Find(&users)
+
+	fmt.Println("user:", users)
+
 	for _, user := range users {
 		if user.Mail == args.Input.Mail {
 			if user.Password == args.Input.Password {
@@ -110,7 +97,7 @@ func (r *rResolver) Viewer(ctx context.Context, args *struct {
 
 	token := ctx.Value("jwt").(*jwt.Token)
 	if token == nil && args.Token == nil {
-		return nil, errors.New("There needs to be a token in the Authorization header or viewer input")
+		return nil, errors.New("Token not set")
 	}
 
 	if token == nil && args.Token != nil {
@@ -122,13 +109,18 @@ func (r *rResolver) Viewer(ctx context.Context, args *struct {
 		token = viewerToken
 	}
 
-	claims, _ := token.Claims.(jwt.MapClaims)
-	id := claims["sub"].(string)
+	claims := token.Claims.(*authentication.MyCustomClaims)
+
+	fmt.Println(claims.ID)
 
 	var user structs.User
 
+	var users []structs.User
+
+	db.Find(&users)
+
 	for _, u := range users {
-		if id == string(u.ID) {
+		if claims.ID == string(u.ID) {
 			user = u
 		}
 	}
@@ -155,33 +147,15 @@ func (r *rResolver) Users(ctx context.Context, args *struct {
 		token = viewerToken
 	}
 
-	// claims, _ := token.Claims.(jwt.MapClaims)
-	// id := claims["sub"].(string)
-
-	// var users = []structs.User{
-	// 	{
-	// 		ID:       "1",
-	// 		Name:     "Example User",
-	// 		Mail:     "example@mail.com",
-	// 		Password: "example",
-	// 	},
-	// 	{
-	// 		ID:       "2",
-	// 		Name:     "Test User",
-	// 		Mail:     "test@mail.com",
-	// 		Password: "test",
-	// 	},
-	// }
-
 	var allUsers []structs.User
 
 	db.Find(&allUsers)
 
-	var l []*resolvers.UsersResolver
+	var users []*resolvers.UsersResolver
 
-	for _, user := range allUsers {
-		l = append(l, &resolvers.UsersResolver{user})
+	for _, u := range allUsers {
+		users = append(users, &resolvers.UsersResolver{u})
 	}
 
-	return l, nil
+	return users, nil
 }

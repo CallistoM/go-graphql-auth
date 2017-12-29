@@ -1,13 +1,16 @@
 package structs
 
-import "github.com/jinzhu/gorm"
+import "time"
 
 // User struct
 type User struct {
-	gorm.Model
-	Name     string
-	Mail     string
-	Password string
+	ID        string
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt *time.Time
+	Name      string
+	Mail      string
+	Password  string
 }
 
 // LoginInput struct
