@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	user "github.com/callistom/jwt_graphql_server/structs"
+	user "github.com/callistom/go-graphql-auth/structs"
 	jwt "github.com/dgrijalva/jwt-go"
 )
 

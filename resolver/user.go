@@ -1,7 +1,7 @@
 package resolver
 
 import (
-	structs "github.com/callistom/jwt_graphql_server/structs"
+	structs "github.com/callistom/go-graphql-auth/structs"
 	graphql "github.com/neelance/graphql-go"
 )
 

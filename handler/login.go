@@ -3,8 +3,8 @@ package handler
 import (
 	"errors"
 
-	"github.com/callistom/jwt_graphql_server/authentication"
-	"github.com/callistom/jwt_graphql_server/structs"
+	"github.com/callistom/go-graphql-auth/authentication"
+	"github.com/callistom/go-graphql-auth/structs"
 	"github.com/jinzhu/gorm"
 )
 

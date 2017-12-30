@@ -6,9 +6,9 @@ import (
 	"log"
 	"net/http"
 
-	authentication "github.com/callistom/jwt_graphql_server/authentication"
-	handler "github.com/callistom/jwt_graphql_server/handler"
-	structs "github.com/callistom/jwt_graphql_server/structs"
+	authentication "github.com/callistom/go-graphql-auth/authentication"
+	handler "github.com/callistom/go-graphql-auth/handler"
+	structs "github.com/callistom/go-graphql-auth/structs"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
