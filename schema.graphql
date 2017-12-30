@@ -4,21 +4,14 @@ schema {
 }
 
 type Query {
-  viewer(token: String): Viewer
-  users(token: String): [Users]!
+  user(token: String): User
 }
 
 type Mutation {
   login(input: LoginInput!): String!
 }
 
-type Viewer {
-  id: ID!
-  name: String!
-  mail: String!
-}
-
-type Users {
+type User {
   id: ID!
   name: String!
   mail: String!
