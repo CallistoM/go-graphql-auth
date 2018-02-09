@@ -8,6 +8,7 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
+// MyCustomClaims jwt claims with id
 type MyCustomClaims struct {
 	ID string
 	jwt.MapClaims
@@ -31,18 +32,23 @@ func GenerateToken(user user.User) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	tokenString, err := token.SignedString(PublicKey)
+
 	if err != nil {
 		return "", err
 	}
+
 	return tokenString, nil
 }
 
 // CheckToken checks if token is valid else returns error
 func CheckToken(jwtToken string) (*jwt.Token, error) {
+
 	token, err := jwt.ParseWithClaims(jwtToken, &MyCustomClaims{}, func(token *jwt.Token) (interface{}, error) {
+
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
+
 		return PublicKey, nil
 	})
 

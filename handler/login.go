@@ -1,22 +1,32 @@
 package handler
 
 import (
+	// standard libraries
 	"errors"
-
+	// custom handlers
 	"github.com/callistom/go-graphql-auth/authentication"
 	"github.com/callistom/go-graphql-auth/structs"
 	"github.com/jinzhu/gorm"
 )
 
-var db *gorm.DB
+// init vars
+var (
+	db  *gorm.DB
+	err error
+)
 
+// Login function find user
 func (r *Resolver) Login(args *struct {
 	Input *structs.LoginInput
 }) (string, error) {
 
+	db, err = gorm.Open("postgres", "postgres://localhost/graphql?sslmode=disable")
+
 	var users []structs.User
 
-	db.Find(&users)
+	if err := db.Find(&users).Error; err != nil {
+		return "", err
+	}
 
 	for _, user := range users {
 		if user.Mail == args.Input.Mail {

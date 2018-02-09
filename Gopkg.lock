@@ -2,33 +2,16 @@
 
 
 [[projects]]
-  name = "github.com/callistom/go-graphql-auth"
-  packages = [
-    "authentication",
-    "handler",
-    "resolver",
-    "structs"
-  ]
-  revision = "86fa2e059c2cd46f750d47a88310d52ebc6f8fd7"
-  version = "0.1-beta"
-
-[[projects]]
   name = "github.com/dgrijalva/jwt-go"
   packages = ["."]
   revision = "dbeaa9332f19a944acb5736b4456cfcc02140e29"
   version = "v3.1.0"
 
 [[projects]]
-  name = "github.com/go-sql-driver/mysql"
-  packages = ["."]
-  revision = "a0583e0143b1624142adab07e0e97fe106d99561"
-  version = "v1.3"
-
-[[projects]]
   name = "github.com/jinzhu/gorm"
   packages = [
     ".",
-    "dialects/mysql"
+    "dialects/postgres"
   ]
   revision = "5174cc5c242a728b435ea2be8a2f7f998e15429b"
   version = "v1.0"
@@ -38,6 +21,16 @@
   name = "github.com/jinzhu/inflection"
   packages = ["."]
   revision = "1c35d901db3da928c72a72d8458480cc9ade058f"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/lib/pq"
+  packages = [
+    ".",
+    "hstore",
+    "oid"
+  ]
+  revision = "88edab0803230a3898347e77b474f8c1820a1f20"
 
 [[projects]]
   branch = "master"
@@ -58,7 +51,7 @@
     "relay",
     "trace"
   ]
-  revision = "5d3b13f2e2215f7d53c88b20fd2c37f0a37b5ffd"
+  revision = "b46637030579abd312c5eea21d36845b6e9e7ca4"
 
 [[projects]]
   name = "github.com/opentracing/opentracing-go"
@@ -74,11 +67,11 @@
   branch = "master"
   name = "golang.org/x/net"
   packages = ["context"]
-  revision = "d866cfc389cec985d6fda2859936a575a55a3ab6"
+  revision = "f5dfe339be1d06f81b22525fe34671ee7d2c8904"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "4c4c48bc8248cbfa02e1cfa7bf4f4d5f0885ace2fe746c9d5257cf95284180d9"
+  inputs-digest = "f7d65a40219525df6004c616ea988e938a92c072ffbb81bed7a3313c199109fd"
   solver-name = "gps-cdcl"
   solver-version = 1

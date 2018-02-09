@@ -10,20 +10,22 @@ type UserResolver struct {
 	User structs.User
 }
 
+// UsersResolver struct
 type UsersResolver struct {
 	User structs.User
 }
 
+// ID returns id
 func (v *UsersResolver) ID() graphql.ID {
 	return graphql.ID(v.User.ID)
 }
 
-// Name return name
+// Name returns name
 func (v *UsersResolver) Name() string {
 	return v.User.Name
 }
 
-// Mail return mail
+// Mail returns mail
 func (v *UsersResolver) Mail() string {
 	return v.User.Mail
 }

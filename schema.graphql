@@ -5,6 +5,7 @@ schema {
 
 type Query {
   user(token: String): User
+  users(token: String): [User]!
 }
 
 type Mutation {
@@ -16,13 +17,6 @@ type User {
   name: String!
   mail: String!
 }
-
-type Review {
-		# The number of stars this review gave, 1-5
-		stars: Int!
-		# Comment about the movie
-		commentary: String
-	}
 
 input LoginInput {
   mail: String!
