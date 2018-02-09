@@ -46,9 +46,11 @@ func init() {
 func main() {
 	http.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		page, err := ioutil.ReadFile("graphiql.html")
+
 		if err != nil {
 			log.Fatal(err)
 		}
+
 		w.Write(page)
 	}))
 
