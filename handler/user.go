@@ -8,6 +8,7 @@ import (
 	"github.com/callistom/go-graphql-auth/authentication"
 	"github.com/callistom/go-graphql-auth/resolver"
 	"github.com/callistom/go-graphql-auth/structs"
+	// db
 	"github.com/jinzhu/gorm"
 	// jwt package
 	jwt "github.com/dgrijalva/jwt-go"
@@ -44,11 +45,11 @@ func (r *Resolver) User(ctx context.Context, args *struct {
 	)
 
 	if err := db.Find(&users).Error; err != nil {
-		return nil, err
+		return nil, errors.New("An error has occured when trying to fetch user")
 	}
 
 	for _, u := range users {
-		if claims.ID == string(u.ID) {
+		if claims.ID == uint(u.ID) {
 			user = u
 		}
 	}
@@ -61,7 +62,7 @@ func (r *Resolver) User(ctx context.Context, args *struct {
 // Users handler
 func (r *Resolver) Users(ctx context.Context, args *struct {
 	Token *string
-}) ([]*resolver.UsersResolver, error) {
+}) ([]*resolver.UserResolver, error) {
 
 	token := ctx.Value("jwt").(*jwt.Token)
 
@@ -79,13 +80,15 @@ func (r *Resolver) Users(ctx context.Context, args *struct {
 
 	var (
 		allUsers []structs.User
-		users    []*resolver.UsersResolver
+		users    []*resolver.UserResolver
 	)
 
-	db.Find(&allUsers)
+	if err := db.Find(&allUsers).Error; err != nil {
+		return nil, errors.New("An error has occured when trying to fetch users")
+	}
 
 	for _, u := range allUsers {
-		users = append(users, &resolver.UsersResolver{u})
+		users = append(users, &resolver.UserResolver{u})
 	}
 
 	return users, nil

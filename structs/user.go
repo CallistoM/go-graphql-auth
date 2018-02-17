@@ -4,7 +4,7 @@ import "time"
 
 // User struct
 type User struct {
-	ID        string
+	ID        uint `gorm:"primary_key" json:"id"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt *time.Time

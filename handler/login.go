@@ -7,6 +7,7 @@ import (
 	"github.com/callistom/go-graphql-auth/authentication"
 	"github.com/callistom/go-graphql-auth/structs"
 	"github.com/jinzhu/gorm"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // init vars
@@ -25,18 +26,23 @@ func (r *Resolver) Login(args *struct {
 	var users []structs.User
 
 	if err := db.Find(&users).Error; err != nil {
-		return "", err
+		return "", errors.New("An error has occured when trying to fetch users")
 	}
 
 	for _, user := range users {
 		if user.Mail == args.Input.Mail {
-			if user.Password == args.Input.Password {
+
+			// compare password with given password
+			err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(args.Input.Password))
+
+			if err == nil {
 				token, err := authentication.GenerateToken(user)
 				if err != nil {
 					return "", err
 				}
 				return token, err
 			}
+
 			return "", errors.New("Password is not correct")
 		}
 	}

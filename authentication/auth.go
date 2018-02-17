@@ -1,6 +1,7 @@
 package authentication
 
 import (
+	// standard libraries
 	"context"
 	"fmt"
 	"net/http"
@@ -17,8 +18,11 @@ func (c contextKey) String() string {
 func Auth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
+
 		token := r.Header.Get("Authorization")
+
 		jwt, err := CheckToken(token)
+
 		if err != nil {
 			fmt.Println(err)
 		}

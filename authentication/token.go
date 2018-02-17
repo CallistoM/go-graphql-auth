@@ -1,16 +1,17 @@
 package authentication
 
 import (
+	// standard libraries
 	"fmt"
 	"time"
-
+	// custom handlers
 	user "github.com/callistom/go-graphql-auth/structs"
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
 // MyCustomClaims jwt claims with id
 type MyCustomClaims struct {
-	ID string
+	ID uint
 	jwt.MapClaims
 }
 
