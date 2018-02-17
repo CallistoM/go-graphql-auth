@@ -3,11 +3,13 @@ package handler
 import (
 	// standard libraries
 	"errors"
+	// encryption library
+	"golang.org/x/crypto/bcrypt"
 	// custom handlers
 	"github.com/callistom/go-graphql-auth/authentication"
 	"github.com/callistom/go-graphql-auth/structs"
+	// db
 	"github.com/jinzhu/gorm"
-	"golang.org/x/crypto/bcrypt"
 )
 
 // init vars
